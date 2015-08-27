@@ -1,0 +1,31 @@
+<IfModule mod_rewrite.c>
+    Options +FollowSymlinks
+    RewriteEngine On
+</IfModule>
+
+<IfModule mod_rewrite.c>
+
+    RewriteCond %{REQUEST_URI} ^/(control)
+    RewriteRule ^control/assets/(.*)$ application/backend/web/assets/$1 [L]
+    RewriteRule ^control/css/(.*)$ application/backend/web/css/$1 [L]
+    RewriteRule ^control/themes/(.*)$ application/backend/themes/$1 [L]
+
+    RewriteCond %{REQUEST_URI} !^/backend/web/(assets|css|themes)/
+    RewriteCond %{REQUEST_URI} ^/(control)
+    RewriteRule ^.*$ application/backend/web/index.php [L]
+
+    RewriteCond %{REQUEST_URI} ^/(assets|css|themes)
+    RewriteRule ^assets/(.*)$ application/frontend/web/assets/$1 [L]
+    RewriteRule ^css/(.*)$ application/frontend/web/css/$1 [L]
+    RewriteRule ^themes/(.*)$ application/frontend/themes/$1 [L]
+
+    RewriteCond %{REQUEST_URI} !^/
+    RewriteRule (.*) /application/frontend/web/$1
+
+    RewriteCond %{REQUEST_URI} !^/application/(frontend|backend|api)/web/(assets|css)/
+    RewriteCond %{REQUEST_URI} !^/application/(frontend|backend|api)/themes/
+    RewriteCond %{REQUEST_URI} !index.php
+    RewriteCond %{REQUEST_FILENAME} !-f [OR]
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^.*$ application/frontend/web/index.php
+</IfModule>
