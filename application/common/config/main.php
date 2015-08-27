@@ -9,7 +9,9 @@ return [
         ],
         'db' => [
             'class' => 'yii\db\Connection',
-            'tablePrefix' => '',
+            'dsn' => 'mysql:host=localhost;dbname=wp_io',
+            'username' => 'wp_io',
+            'password' => 'fe28fz',
             'charset' => 'utf8',
         ],
         'log' => [
