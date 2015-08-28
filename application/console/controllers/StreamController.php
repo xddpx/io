@@ -16,7 +16,19 @@ use yii\helpers\VarDumper;
 class StreamController extends Controller {
 
     public function actionRun() {
-        Yii::$app->socket->listen();
+        $process = exec('ps aux | grep "stream/run"', $output);
+        $pattern = "/application\/yii stream\/run/i";
+        $count = 0;
+        if (!empty($output)) {
+            foreach ($output as $pid) {
+                if (preg_match($pattern, $pid)) {
+                    $count++;
+                }
+            }
+        }
+        if ($count <= 1) {
+            Yii::$app->socket->listen();
+        }
     }
 
 }
